@@ -1,12 +1,25 @@
 .vagrant
-/cookbooks
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
 
 # Bundler
+Gemfile.lock
+gems.locked
 bin/*
 .bundle/*
 
+# test kitchen
 .kitchen/
-.kitchen.local.yml
+kitchen.local.yml
 
-# files/*.crt
-# files/*key
+# Chef Infra
+Berksfile.lock
+.zero-knife.rb
+policyfile.lock.json
+
+.idea/
+
