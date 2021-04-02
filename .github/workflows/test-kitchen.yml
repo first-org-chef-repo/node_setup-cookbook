@@ -1,0 +1,67 @@
+name: Cookbooks Upload
+
+on: [ push, workflow_dispatch ]
+  
+jobs:
+  Kitchen-Test:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Chef Installed?
+        continue-on-error: true
+        id: check-chef
+        run: chef -v
+        
+      - name: Install ChefWorkstation v21.2.278
+        if: steps.check-chef.outcome == 'failure'
+        run: |
+          wget https://packages.chef.io/files/stable/chef-workstation/21.2.278/el/8/chef-workstation-21.2.278-1.el7.x86_64.rpm
+          sudo rpm -ivh chef-workstation-21.2.278-1.el7.x86_64.rpm
+          rm chef-workstation-21.2.278-1.el7.x86_64.rpm
+          chef -v
+  
+      - name: Docker Installed?
+        continue-on-error: true
+        id: check-docker
+        run: docker -v
+  
+      - name: Install Docker
+        if: steps.check-docker.outcome == 'failure'
+        run: |
+          sudo yum update -y
+          sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+          sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+          sudo yum install -y docker-ce docker-ce-cli containerd.io
+          docker -v
+          sudo usermod -aG docker $USER
+          sudo chmod 666 /run/docker.sock
+          sudo service docker start
+          service docker status
+      - name: Converge
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          kitchen destroy
+          kitchen create
+          kitchen converge
+          
+      - name: Test
+        run: kitchen verify
+
+      - name: Cleanup Containers and node client from Chef Server
+        if: always()
+        run: |
+          kitchen destroy
+          knife node list -c .chef/config.rb | grep "default-*" | xargs knife node delete -y -c .chef/config.rb || echo "node deletion failed somehow"
+          knife client list -c .chef/config.rb | grep "default-*" | xargs knife client delete -y -c .chef/config.rb || echo "client delete failed somehow"
+
+  Cookbook-Upload:
+    runs-on: self-hosted
+    needs: Kitchen-Test
+    steps:
+      - name: Uploading Cookbooks to Chef Server
+        run: |
+          rm Berksfile.lock || echo 'Removeal not took place.'
+          berks install
+          berks upload --force
