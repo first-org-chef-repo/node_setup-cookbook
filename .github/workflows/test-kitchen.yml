@@ -38,7 +38,7 @@ jobs:
           sudo chmod 666 /run/docker.sock
           sudo service docker start
           service docker status
-      - name: Converge
+      - name: Kitchen Converge
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
@@ -46,13 +46,16 @@ jobs:
           kitchen create
           kitchen converge
           
-      - name: Test
+      - name: Kitchen Test
         run: kitchen verify
+      
+      - name: Cleanup Containers
+        if: always()
+        run: kitchen destroy
 
-      - name: Cleanup Containers and node client from Chef Server
+      - name: Delete node/client from Chef Server
         if: always()
         run: |
-          kitchen destroy
           knife node list -c .chef/config.rb | grep "default-*" | xargs knife node delete -y -c .chef/config.rb || echo "node deletion failed somehow"
           knife client list -c .chef/config.rb | grep "default-*" | xargs knife client delete -y -c .chef/config.rb || echo "client delete failed somehow"
 
