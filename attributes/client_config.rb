@@ -15,7 +15,7 @@ default['bootstrap_a_node']['policy_name'] = 'web-server'
 default['bootstrap_a_node']['policy_group'] = 'staging'
 
 # Specify chef-client version
-default['bootstrap_a_node']['chef_client']['version'] = '16'
+default['bootstrap_a_node']['chef_client']['version'] = '16.10'
 
 # Specfy interval/splay for `chef-client` daemon
 default['chef_client']['interval'] = 60
