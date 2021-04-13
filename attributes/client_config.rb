@@ -3,7 +3,7 @@
 ###
 
 # Specify Chef Server FQDN & IP
-default['bootstrap_a_node']['chef_server']['ipaddress'] = '198.18.246.201'
+default['bootstrap_a_node']['chef_server']['ipaddress'] = '3.112.236.1'
 default['bootstrap_a_node']['chef_server']['fqdn'] = 'ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com'
 
 # Specify Org name and its key file name

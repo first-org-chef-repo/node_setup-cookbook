@@ -18,10 +18,10 @@ describe file('/etc/chef/first-org-validator.pem') do
 end
 
 describe file('/etc/hosts') do
-  its('content') { should match /198.18.246.201 automate.cl/ }
+  its('content') { should match /3.112.236.1 ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com/ }
 end
 
-describe file('/etc/chef/trusted_certs/automate.cl.crt') do
+describe file('/etc/chef/trusted_certs/ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com.crt') do
   it { should exist }
   its('mode') { should cmp '0644' }
   its('owner') { should eq 'root' }
