@@ -42,6 +42,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
+          docker container prune -f
           kitchen destroy
           kitchen create
           kitchen converge
