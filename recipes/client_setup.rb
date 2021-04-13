@@ -9,7 +9,7 @@
 ###########
 
 chef_client_config 'client.rb' do
-  chef_server_url "https://#{node['bootstrap_a_node']['chef_server']['fqdn']}/organizations/#{node['bootstrap_a_node']['org_name']}"
+  chef_server_url "https://ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com/organizations/#{node['bootstrap_a_node']['org_name']}"
   chef_license 'accept'
   log_location 'STDOUT'
   policy_name "#{node['bootstrap_a_node']['policy_name']}"
