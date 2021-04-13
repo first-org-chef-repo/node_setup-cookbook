@@ -9,12 +9,12 @@
 ###########
 
 chef_client_config 'client.rb' do
-  chef_server_url "https://ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com/organizations/#{node['bootstrap_a_node']['org_name']}"
+  chef_server_url "https://#{node['bootstrap_a_node']['chef_server']['fqdn']}/organizations/#{node['bootstrap_a_node']['org_name']}"
   chef_license 'accept'
   log_location 'STDOUT'
   policy_name "#{node['bootstrap_a_node']['policy_name']}"
   policy_group "#{node['bootstrap_a_node']['policy_group']}"
-  additional_config "environment \"#{node['bootstrap_a_node']['environment']}\"\nvalidation_key \"/etc/chef/#{node['bootstrap_a_node']['org_validation_key_file']}\"\ntrusted_certs_dir \"/etc/chef/trusted_certs\""
+  additional_config "validation_key \"/etc/chef/#{node['bootstrap_a_node']['org_validation_key_file']}\"\ntrusted_certs_dir \"/etc/chef/trusted_certs\""
 end
 
 directory '/etc/chef/trusted_certs' do
