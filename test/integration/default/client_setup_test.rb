@@ -5,7 +5,7 @@
 
 describe file('/etc/chef/client.rb') do
   its('content') { should match /chef_license "accept"/ }
-  its('content') { should match %r{chef_server_url "https://automate.cl/organizations/first-org"} }
+  its('content') { should match %r{chef_server_url "https://ec2-3-112-236-1_ap-northeast-1_compute_amazonaws_com.crt/organizations/first-org"} }
   its('content') { should match /policy_group "staging"/ }
   its('content') { should match /policy_name "web-server"/ }
   its('content') { should match /log_location STDOUT/ }
