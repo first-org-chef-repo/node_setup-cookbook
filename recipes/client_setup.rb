@@ -21,11 +21,17 @@ directory '/etc/chef/trusted_certs' do
   mode '755'
 end
 
-cookbook_file 'Place SSL certificate to /etc/chef/trusted_certs' do
-  source "#{node['bootstrap_a_node']['chef_server']['fqdn']}.crt"
-  mode '644'
-  owner 'root'
-  path "/etc/chef/trusted_certs/#{node['bootstrap_a_node']['chef_server']['fqdn']}.crt"
+# cookbook_file 'Place SSL certificate to /etc/chef/trusted_certs' do
+  # source "#{node['bootstrap_a_node']['chef_server']['fqdn']}.crt"
+  # mode '644'
+  # owner 'root'
+  # path "/etc/chef/trusted_certs/#{node['bootstrap_a_node']['chef_server']['fqdn']}.crt"
+# end
+
+ruby_block 'knife ssl fetch' do
+  block do
+    system 'knife ssl fetch'
+  end
 end
 
 ###########
