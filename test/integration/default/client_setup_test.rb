@@ -17,16 +17,8 @@ describe file('/etc/chef/first-org-validator.pem') do
   it { should exist }
 end
 
-describe file('/etc/hosts') do
-  its('content') { should match /3.112.236.1 ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com/ }
-end
-
-describe file('/etc/chef/trusted_certs/ec2-3-112-236-1.ap-northeast-1.compute.amazonaws.com.crt') do
+describe directory('/etc/chef/trusted_certs') do
   it { should exist }
-  its('mode') { should cmp '0644' }
-  its('owner') { should eq 'root' }
-  its('content') { should match /-----BEGIN CERTIFICATE-----/ }
-  its('content') { should match /-----END CERTIFICATE-----/ }
 end
 
 describe service('chef-client') do

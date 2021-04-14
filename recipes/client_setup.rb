@@ -34,18 +34,6 @@ ruby_block 'knife ssl fetch' do
   end
 end
 
-###########
-# Create client.pem and delete org-validator after first CCR
-###########
-
-ruby_block 'edit etc hosts' do
-  block do
-    rc = Chef::Util::FileEdit.new('/etc/hosts')
-    rc.insert_line_if_no_match(/#{node['bootstrap_a_node']['chef_server']['fqdn']}/, "#{node['bootstrap_a_node']['chef_server']['ipaddress']} #{node['bootstrap_a_node']['chef_server']['fqdn']}")
-    rc.write_file
-  end
-end
-
 cookbook_file "Place validator key for Org:#{node['bootstrap_a_node']['org_name']}" do
   not_if { ::File.exist?('/etc/chef/client.pem') }
   source "#{node['bootstrap_a_node']['org_validation_key_file']}" # Watch out for the file name
