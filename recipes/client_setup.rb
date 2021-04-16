@@ -28,11 +28,11 @@ end
   # path "/etc/chef/trusted_certs/#{node['bootstrap_a_node']['chef_server']['fqdn']}.crt"
 # end
 
-ruby_block 'knife ssl fetch' do
-  block do
-    system 'knife ssl fetch'
-  end
-end
+# ruby_block 'knife ssl fetch' do
+#   block do
+#     system 'knife ssl fetch'
+#   end
+# end
 
 cookbook_file "Place validator key for Org:#{node['bootstrap_a_node']['org_name']}" do
   not_if { ::File.exist?('/etc/chef/client.pem') }
