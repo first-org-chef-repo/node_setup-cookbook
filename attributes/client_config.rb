@@ -16,7 +16,7 @@ default['bootstrap_a_node']['policy_group'] = 'production'
 
 # Specify chef-client version
 default['bootstrap_a_node']['chef_client']['version'] = '16.10'
-default['bootstrap_a_node']['chef_client']['channel'] = 'stable'
+default['bootstrap_a_node']['chef_client']['channel'] = 'current'
 
 # Specfy interval/splay for `chef-client` daemon
 default['chef_client']['interval'] = 60

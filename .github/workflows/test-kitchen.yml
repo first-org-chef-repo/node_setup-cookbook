@@ -43,6 +43,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           docker container prune -f
+          docker image prune -af
           kitchen destroy
           kitchen create
           kitchen converge
