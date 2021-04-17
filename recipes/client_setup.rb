@@ -55,7 +55,7 @@ end
 
 chef_client_updater "up or down grade Chef Infra version to #{node['bootstrap_a_node']['chef_client']['version']}" do
   version "#{node['bootstrap_a_node']['chef_client']['version']}"
-  channel "#{node['bootstrap_a_node']['chef_client']['channel']}"
+  # channel "#{node['bootstrap_a_node']['chef_client']['channel']}"
   post_install_action 'exec'
 end
 
