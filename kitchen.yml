@@ -1,14 +1,16 @@
 ---
 driver:  
   name: dokken
+  chef_version: 16.13.16
+  privileged: true
+  pull_platform_image: false
+  pull_chef_image: false
 
 transport:
   name: dokken
 
 provisioner:
   name: dokken
-  product_name: chef
-  product_version: latest
 
 verifier:
   name: inspec
@@ -29,24 +31,26 @@ suites:
                   url: <%= ENV['SLACK_WEBHOOK_URL'] %>
 
 platforms:
-  - name: centos-8
+  - name: amazonlinux-2
     driver:
-      image: dokken/centos-8
-      tag: latest
-      privileged: true
+      image: amazonlinux-2:mine
       pid_one_command: /usr/lib/systemd/systemd
+  - name: almalinux-8
+    driver:
+      image: almalinux-8:mine
+      pid_one_command: /usr/lib/systemd/systemd
+  # - name: centos-8
+  #   driver:
+  #     image: centos-stream-8:mine
+  #     pid_one_command: /usr/lib/systemd/systemd
   # - name: centos-7
   #   driver:
-  #     image: dokken/centos-7
-  #     tag: latest
-  #     privileged: true
-  #     pid_one_command: /sbin/init
+  #    image: centos-7:mine
+  #    pid_one_command: /sbin/init
   # - name: ubuntu-20.04
   #   driver:
-  #     image: dokken/ubuntu-20.04
-  #     tag: latest
-  #     privileged: true
-  #     pid_one_command: /bin/systemd
+  #    image: ubuntu-20.04:mine
+  #    pid_one_command: /bin/systemd
 
 # lifecycle:
 #   pre_converge:

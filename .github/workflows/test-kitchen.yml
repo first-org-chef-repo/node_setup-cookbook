@@ -42,9 +42,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          docker container prune -f
-          docker image prune -af
           kitchen destroy
+          docker container prune --force
+          docker volume prune --force
+          docker network prune --force
+          docker system prune --force
+          kitchen list
           kitchen create
           kitchen converge
           
