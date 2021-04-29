@@ -1,4 +1,4 @@
-# `bootstrap_a_node` Cookbook
+# `node_setup` Cookbook
 
  Having issues with `knife bootstrap`? Why don't you start using [`chef-run`](https://docs.chef.io/workstation/chef_run/) to bootstrap your nodes.  		
  This cookbook provides easy and simple way of registering your nodes to Chef Infra server.
@@ -12,14 +12,14 @@
 3. Run `chef-run` 		
 
   ```
-  chef-run [NODE_IP] bootstrap_a_node
+  chef-run [NODE_IP] node_setup
   ``` 	
 
   *Prerequisites: ssh connection to the node. Available options: `--password PASSWORD` `-identity-file PATH/TO/FILE`
 
 4. Once `chef-run` completes. The node will show up on your Chef Automate with specified policy group/Environment and your're good to go.  
 
-##### Remember to keep this `bootstrap_a_node` cookbook in the runlist as it will keep eyes on your nodes and perform any fix if unwanted changes that may make nodes unable to sync with Chef Infra server. 
+##### Remember to keep this `node_setup` cookbook in the runlist as it will keep eyes on your nodes and perform any fix if unwanted changes that may make nodes unable to sync with Chef Infra server. 
 		
 # Attributes		
 		
@@ -29,20 +29,20 @@
 ###
 
 # Specify Chef Server FQDN & IP
-default['bootstrap_a_node']['chef_server']['ipaddress'] = '198.18.246.201'
-default['bootstrap_a_node']['chef_server']['fqdn'] = 'automate.cl'
+default['node_setup']['chef_server']['ipaddress'] = '198.18.246.201'
+default['node_setup']['chef_server']['fqdn'] = 'automate.cl'
 
 # Specify Org name and its key file name
-default['bootstrap_a_node']['org_name'] = 'first-org'
-default['bootstrap_a_node']['org_validation_key_file'] = 'first-org-validator.pem'
+default['node_setup']['org_name'] = 'first-org'
+default['node_setup']['org_validation_key_file'] = 'first-org-validator.pem'
 
 # Specify Policy name & Policy group OR Environment
-default['bootstrap_a_node']['policy_name'] = 'web-server'
-default['bootstrap_a_node']['policy_group'] = 'staging'
-# default['bootstrap_a_node']['environment'] = 'staging' # If Role&Environment is in use, `run_list` needs be set with `knife node run_list add NODE_NAME RUN_LIST_ITEM (options)`
+default['node_setup']['policy_name'] = 'web-server'
+default['node_setup']['policy_group'] = 'staging'
+# default['node_setup']['environment'] = 'staging' # If Role&Environment is in use, `run_list` needs be set with `knife node run_list add NODE_NAME RUN_LIST_ITEM (options)`
 
 # Specify chef-client version
-default['bootstrap_a_node']['chef_client']['version'] = '16'
+default['node_setup']['chef_client']['version'] = '16'
 
 # Specfy interval/splay for `chef-client` daemon
 default['chef_client']['interval'] = 60
@@ -73,7 +73,7 @@ default['chef_client']['handler']['slack']['cookbook_detail_level'] = 'off'
 default['chef_client']['handler']['slack']['send_organization'] = true
 
 # Specify node Time Zone
-default['bootstrap_a_node']['timezone'] = 'Asia/Tokyo'		
+default['node_setup']['timezone'] = 'Asia/Tokyo'		
  ```
 
 # In case of failure...

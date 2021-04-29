@@ -1,6 +1,6 @@
-# bootstrap_a_node CHANGELOG
+# node_setup CHANGELOG
 
-This file is used to list changes made in each version of the bootstrap_a_node cookbook.
+This file is used to list changes made in each version of the node_setup cookbook.
 
 ## 0.1.0
 

@@ -1,7 +1,7 @@
 ---
 driver:  
   name: dokken
-  chef_version: 16.13.16
+  chef_version: 17
   privileged: true
   pull_platform_image: false
   pull_chef_image: false
@@ -17,8 +17,8 @@ verifier:
 
 suites:
   - name: default
-    provisioner:
-        policyfile: policyfile.rb        
+    run_list:
+      - recipe[node_setup::default]    
     verifier:
       inspec_tests:
         - test/integration/default
@@ -31,14 +31,14 @@ suites:
                   url: <%= ENV['SLACK_WEBHOOK_URL'] %>
 
 platforms:
-  # - name: amazonlinux-2
-  #   driver:
-  #     image: amazonlinux-2:mine
-  #     pid_one_command: /usr/lib/systemd/systemd
-  # - name: almalinux-8
-  #   driver:
-  #     image: almalinux-8:mine
-  #     pid_one_command: /usr/lib/systemd/systemd
+  - name: amazonlinux-2
+    driver:
+      image: amazonlinux-2:mine
+      pid_one_command: /usr/lib/systemd/systemd
+  - name: almalinux-8
+    driver:
+      image: almalinux-8:mine
+      pid_one_command: /usr/lib/systemd/systemd
   - name: centos-8
     driver:
       image: centos-stream-8:mine
@@ -51,6 +51,7 @@ platforms:
     driver:
      image: ubuntu-20.04:mine
      pid_one_command: /bin/systemd
+
 
 # lifecycle:
 #   pre_converge:
@@ -89,7 +90,7 @@ platforms:
 # suites:
 #   - name: default
 #     run_list:
-#       - recipe[bootstrap_a_node::default]
+#       - recipe[node_setup::default]
 #     verifier:
 #       inspec_tests:
 #         - test/integration/default

@@ -3,4 +3,4 @@
 ###
 
 # Specify node Time Zone
-default['bootstrap_a_node']['timezone'] = 'Asia/Tokyo'
+default['node_setup']['timezone'] = 'Asia/Tokyo'

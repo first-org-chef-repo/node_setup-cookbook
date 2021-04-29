@@ -1,4 +1,4 @@
-# InSpec test for recipe bootstrap_a_node::default
+# InSpec test for recipe node_setup::default
 
 # The InSpec reference, with examples and extensive documentation, can be
 # found at https://docs.chef.io/inspec/resources/
